@@ -15,10 +15,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Log4j2
 @RequiredArgsConstructor
 public class GameController {
-
     @GetMapping("/main")
     public void mainGET(){
         log.info("game main get...");
+    }
+
+    @GetMapping("/1")
+    public void game1GET(){
+        log.info("game1 get...");
+
+    }
+
+    @GetMapping("/posenet")
+    public void posenetGET(){
+        log.info("posenet get...");
+
     }
 
 }
