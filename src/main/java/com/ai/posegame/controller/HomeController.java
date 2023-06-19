@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @Log4j2
-public class SampleController {
+public class HomeController {
 
-    @GetMapping("/hello")
+    @GetMapping("/home")
     public void hello(Model model){
         log.info("hello..............");
-        model.addAttribute("msg", "Hello World");
     }
 }
