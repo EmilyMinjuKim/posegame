@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <span id="demo"></span>
+</body>
+<script>
+  var time = 5;
+
+  var x = setInterval(function (){
+    document.getElementById("demo").innerHTML = time + "초";
+    time--;
+
+    if(time<0){
+      clearInterval(x);
+      document.getElementById("demo").innerHTML = "시간초과";
+    }
+  }, 1000);
+</script>
+</html>

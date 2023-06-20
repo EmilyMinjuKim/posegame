@@ -5,7 +5,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/game")
@@ -17,6 +22,11 @@ public class GameController {
         log.info("game main get...");
     }
 
+    @GetMapping("/test")
+    public void testGET(){
+        log.info("test..............");
+    }
+
     @GetMapping("/1")
     public void game1GET(Model model){
         log.info("game1 get...");
@@ -25,10 +35,17 @@ public class GameController {
         model.addAttribute("title", title);
     }
 
-    @GetMapping("/posenet")
-    public void posenetGET(){
-        log.info("posenet get...");
+    @PostMapping("/ajax")
+    @ResponseBody
+    public Map<String, String> ajaxPOST(){
+        log.info("ajax.................................................................");
 
+        String title = "pose2";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("imgUrl", "/assets/pictures/" + title + ".jpg");
+        map.put("title", title);
+
+        return map;
     }
 
 }
