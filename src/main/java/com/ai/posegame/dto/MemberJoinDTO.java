@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.dto;
 
 import lombok.Data;
@@ -10,3 +11,4 @@ public class MemberJoinDTO {
     private boolean del;
     private boolean social;
 }
+*/

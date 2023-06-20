@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.security.dto;
 
 import lombok.Getter;
@@ -43,3 +44,4 @@ public class MemberSecurityDTO extends User implements OAuth2User {
         return this.mid;
     }
 }
+*/

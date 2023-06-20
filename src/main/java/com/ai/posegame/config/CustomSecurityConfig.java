@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.config;
 
 import com.ai.posegame.security.CustomUserDetailsService;
@@ -69,3 +70,4 @@ public class CustomSecurityConfig {
         return repo;
     }
 }
+*/

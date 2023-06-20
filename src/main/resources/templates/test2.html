@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Hello</title>
+</head>
+<body>
+    <img id="img" th:src="${imgUrl}" style="width: 320px; height: 240px;">
+    <input th:type="hidden" id="title" th:value="${title}">
+    <button onclick="dataSend();">AJAX</button>
+    <button onclick="nowValue();">VALUE</button>
+    <button onclick="console.log(score);">SCORE</button>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
+
+    let score = 0;
+
+    function dataSend() {
+        $.ajax({
+            url: "/ajax",
+            type:"POST",
+            success: function (data) {
+                console.log("success");
+                console.log(data);
+                document.getElementById("img").src = data.imgUrl;
+                document.getElementById("title").value = data.title;
+                score += 10;
+            },
+            error: function (error) {
+                console.log("error")
+                console.error(error);
+            }
+        });
+    };
+
+    function nowValue(){
+        console.log(document.getElementById("title").value);
+    }
+
+</script>
+</html>

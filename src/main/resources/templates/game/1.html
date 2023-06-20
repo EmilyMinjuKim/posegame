@@ -16,19 +16,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link th:href="@{/css/styles.css}" rel="stylesheet" />
-        <!-- Posenet -->
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0/dist/tf.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.2/dist/posenet.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@3.11.0/dist/tf-core.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@3.11.0/dist/tf-converter.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@3.11.0/dist/tf-backend-webgl.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@0.0.6/dist/pose-detection.min.js"></script>
-        <style>
-            canvas {
-                position: absolute;
-            }
-        </style>
     </head>
     <body class="d-flex flex-column h-100 bg-black">
         <main class="flex-shrink-0">
@@ -52,25 +40,19 @@
                     <div class="text-center mb-5">
                         <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">동작 따라하기</span></h1>
                     </div>
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col">
-                            <!-- Project Card 1-->
-                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
-                                <h5 class="card-header">You</h5>
-                                <div class="card-body p-0">
-                                    <video id="video" autoplay muted playsinline></video>
-                                    <canvas class="offcanvas" id="canvas"></canvas>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <h3>점수 : <span id="score">0</span></h3>
                         </div>
-                        <div class="col">
-                            <!-- Project Card 2-->
-                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
-                                <h5 class="card-header">따라해보세요</h5>
-                                <div class="card-body p-0">
-                                    hello
-                                </div>
-                            </div>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-auto mb-4">
+                            <video id="videoInput" style="display:none"></video>
+                            <canvas id="videoOutput"></canvas>
+                        </div>
+                        <div class="col-auto mb-4">
+                            <img id="img" th:src="${imgUrl}" style="width: 320px; height: 240px;">
+                            <input th:type="hidden" id="title" th:value="${title}">
                         </div>
                     </div>
                 </div>
@@ -95,7 +77,97 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script th:src="@{/js/scripts.js}"></script>
-        <script th:src="@{/js/posenet.js}"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script th:inline="javascript">
+            <!-- 유저 점수 -->
+            let score = 0;
+
+            <!-- 카메라 크기 -->
+            var w = 320, h = 240;
+
+            <!-- 웹소켓 연결 -->
+            var url = "ws://localhost:1111"
+            var ws = new WebSocket(url);
+            ws.onopen = function(){
+                console.log("Websocket is connected.");
+            }
+
+            <!-- 이미지 일치 확인 -->
+            ws.onmessage = function(msg){
+                console.log(msg.data);
+
+                // 파이썬에서 보내주는 메세지
+                var classification = msg.data;
+
+                // 현재 그림의 타이틀
+                /*<![CDATA[*/
+                var now = [[${title}]];
+                /*]]>*/
+
+                // 만약 파이썬 메시지와 그림 타이틀이 같으면 ajax 실행
+                if(classification === now){
+                    console.log("equals");
+
+                    $.ajax({
+                        url: "/ajax",
+                        type: "POST",
+                        success: function (data) {
+                            console.log("success");
+
+                            // 다음 이미지로 바꾸고 title과 score 정보 업데이트
+                            document.getElementById("img").src = data.imgUrl;
+                            document.getElementById("title").value = data.title;
+                            score += 10;
+                            $("#score").text(score);
+                        },
+                        error: function (error) {
+                            console.log("error")
+                            console.error(error);
+                        }
+                    });
+                }
+
+            }
+
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+            var constraints = {audio: false, video: true};
+            var video = document.getElementById("videoInput");
+
+            video.width = w;
+            video.height = h;
+
+            function successCallback(stream){
+                video.srcObject = stream;
+                video.play();
+            }
+            function errorCallback(error){
+                console.log(error);
+            }
+            navigator.getUserMedia(constraints, successCallback, errorCallback);
+
+            var canvas = document.getElementById("videoOutput");
+            canvas.width = w;
+            canvas.height = h;
+            var ctx = canvas.getContext("2d");
+            function processImage(){
+                ctx.drawImage(video, 0, 0, w, h);
+                setTimeout(processImage, 1);
+            }
+            processImage();
+
+            function stream(){
+                setInterval(sendImage, 30);
+            }
+
+            function sendImage(){
+                var rawData = canvas.toDataURL("image/jpeg", 0.5);
+                ws.send(rawData);
+            }
+
+            stream();
+
+
         </script>
     </body>
 </html>

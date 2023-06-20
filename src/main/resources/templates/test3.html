@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Hello</title>
+</head>
+<body>
+    <video id="videoInput" style="display:none"></video>
+    <canvas id="videoOutput"></canvas>
+    <img id="img" th:src="${imgUrl}" style="width: 320px; height: 240px;">
+    <input th:type="hidden" id="title" th:value="${title}">
+    <button onclick="dataSend();">AJAX</button>
+    <button onclick="nowValue();">VALUE</button>
+    <button onclick="console.log(score);">SCORE</button>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
+
+    <!-- 유저 점수 -->
+    let score = 0;
+
+    <!-- 카메라 크기 -->
+    var w = 320, h = 240;
+
+    <!-- 웹소켓 연결 -->
+    var url = "ws://localhost:1111"
+    var ws = new WebSocket(url);
+    ws.onopen = function(){
+        console.log("Websocket is connected.");
+    }
+
+    <!-- 이미지 일치 확인 -->
+	ws.onmessage = function(msg){
+		console.log(msg.data);
+
+        // 파이썬에서 보내주는 메세지
+        var classification = msg.data;
+
+        // 현재 그림의 타이틀
+        /*<![CDATA[*/
+        var now = [[${title}]];
+        /*]]>*/
+
+        // 만약 파이썬 메시지와 그림 타이틀이 같으면 ajax 실행
+        if(classification === now){
+            console.log("equals");
+
+            $.ajax({
+                url: "/ajax",
+                type:"POST",
+                success: function (data) {
+                    console.log("success");
+
+                    // 다음 이미지로 바꾸고 title과 score 정보 업데이트
+                    document.getElementById("img").src = data.imgUrl;
+                    document.getElementById("title").value = data.title;
+                    score += 10;
+                },
+                error: function (error) {
+                    console.log("error")
+                    console.error(error);
+                }
+            });
+        }
+
+	}
+
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    var constraints = {audio: false, video: true};
+    var video = document.getElementById("videoInput");
+
+    video.width = w;
+    video.height = h;
+
+    function successCallback(stream){
+        video.srcObject = stream;
+        video.play();
+    }
+    function errorCallback(error){
+        console.log(error);
+    }
+    navigator.getUserMedia(constraints, successCallback, errorCallback);
+
+    var canvas = document.getElementById("videoOutput");
+    canvas.width = w;
+    canvas.height = h;
+    var ctx = canvas.getContext("2d");
+    function processImage(){
+        ctx.drawImage(video, 0, 0, w, h);
+        setTimeout(processImage, 1);
+    }
+    processImage();
+
+    function stream(){
+        setInterval(sendImage, 30);
+    }
+
+    function sendImage(){
+        var rawData = canvas.toDataURL("image/jpeg", 0.5);
+        ws.send(rawData);
+    }
+
+    stream();
+
+
+</script>
+</html>

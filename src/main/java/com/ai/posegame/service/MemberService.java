@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.service;
 
 import com.ai.posegame.dto.MemberJoinDTO;
@@ -7,3 +8,4 @@ public interface MemberService {
     }
     void join(MemberJoinDTO memberJoinDTO)throws MidExistException ;
 }
+*/

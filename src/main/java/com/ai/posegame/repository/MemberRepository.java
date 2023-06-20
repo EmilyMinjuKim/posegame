@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.repository;
 
 import com.ai.posegame.domain.Member;
@@ -15,3 +16,4 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @EntityGraph(attributePaths = "roleSet")
     Optional<Member> findByEmail(String email);
 }
+*/

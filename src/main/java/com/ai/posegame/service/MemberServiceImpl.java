@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.service;
 
 import com.ai.posegame.domain.MemberRole;
@@ -42,3 +43,4 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 }
+*/

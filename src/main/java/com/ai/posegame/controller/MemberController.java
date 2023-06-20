@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.controller;
 
 import com.ai.posegame.dto.MemberJoinDTO;
@@ -54,3 +55,4 @@ public class MemberController {
     }
 
 }
+*/

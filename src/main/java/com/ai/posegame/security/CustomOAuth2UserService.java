@@ -1,3 +1,4 @@
+/*
 package com.ai.posegame.security;
 
 import com.ai.posegame.domain.Member;
@@ -118,3 +119,4 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
 }
+*/
