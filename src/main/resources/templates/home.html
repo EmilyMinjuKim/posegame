@@ -21,19 +21,7 @@
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
             <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-light bg-black py-3">
-                <div class="container px-5">
-                    <a class="navbar-brand" href="home"><span class="fw-bolder text-primary">Dibidibidip</span></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                            <li class="nav-item"><a class="nav-link" href="home">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="game/main">Create</a></li>
-                            <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" href="game/enter">Enter</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <div id="nav-load" th:replace="~{layout/header :: navFragment}"></div>
             <!-- Header-->
             <header class="py-5">
                 <div class="container px-5 pb-5">
@@ -44,8 +32,9 @@
                                 <div class="badge bg-gradient-primary-to-secondary text-white mb-4"><div class="text-uppercase">디비디비딥 &middot; 가위바위보 &middot; 표정 따라하기</div></div>
                                 <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">Have Fun and Enjoy!!</span></h1>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
-                                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="member/login">Login</a>
-                                    <a class="btn btn-light btn-lg px-5 py-3 fs-6 fw-bolder" href="member/join">Join</a>
+                                    <a sec:authorize="isAnonymous()" class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="member/login">Login</a>
+                                    <a sec:authorize="isAnonymous()" class="btn btn-light btn-lg px-5 py-3 fs-6 fw-bolder" href="member/join">Join</a>
+                                    <a sec:authorize="isAuthenticated()" class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder" href="game/main">Start Games&nbsp;&nbsp;&nbsp;🚀</a>
                                 </div>
                             </div>
                         </div>

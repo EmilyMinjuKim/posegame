@@ -15,9 +15,7 @@ import com.ai.posegame.domain.Member;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final ModelMapper modelMapper;
-
     private final MemberRepository memberRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     @Override

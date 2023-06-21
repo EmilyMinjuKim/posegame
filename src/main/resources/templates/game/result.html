@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dibidibidip:::결과</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+        <!-- Custom Google font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+        <style>
+            .card{
+                --bs-card-bg: none;
+                --bs-card-border-color: #00DFA2;
+                #opacity: 60%;
+                width: 50%;
+                color: white;
+            }
+            table{
+                width: 90%;
+                margin-left:auto;
+                margin-right:auto;
+                font-size: large;
+                margin-bottom: 1em;
+            }
+            tr{
+                border-bottom: 1px dashed white;
+                vertical-align: middle;
+                height: 50px;
+            }
+            .score{
+                text-align: right;
+            }
+            #today{
+                color: gold;
+            }
+        </style>
+    </head>
+    <body class="d-flex flex-column h-100 bg-black">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <div id="nav-load" th:replace="~{layout/header :: navFragment}"></div>
+            <!-- Projects Section-->
+            <section class="py-5">
+                <div id="last"></div>
+                <div class="container px-5 mb-3">
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bolder mb-3" style="color: white">🏅&nbsp;S&nbsp;C&nbsp;O&nbsp;R&nbsp;E&nbsp;🏅</h1>
+                    </div>
+                    <div class="row gx-5 justify-content-center mb-5">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <table>
+                                    <thead>
+                                        <tr style="border-bottom: none; height: 70px;">
+                                            <td><h5>최고 점수 : <span th:text="${total.max_score}"></span></h5></td>
+                                            <td class="score"><h5>누적 점수 : <span th:text="${total.sum_score}"></span></h5></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <th:block th:each="list, listStat : ${list}">
+                                        <tr id="today" th:if="${listStat.index == 0}">
+                                            <td><span th:text="${list.date}"></span>&nbsp;&nbsp;<span class="badge">today</span></td>
+                                            <td class="score"><span th:text="${list.score}"></span>점</td>
+                                        </tr>
+                                        <tr th:unless="${listStat.index == 0}">
+                                            <td th:text="${list.date}"></td>
+                                            <td class="score"><span th:text="${list.score}"></span>점</td>
+                                        </tr>
+                                        </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="text-center text-xxl-start">
+                            <div class="d-grid gap-3 d-sm-flex justify-content-center mb-3">
+                                <a class="btn btn-success btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="/game/1">RESTART</a>
+                                <a class="btn btn-light btn-lg px-5 py-3 fs-6 fw-bolder" href="/game/main">GAME LIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- Footer-->
+        <footer class="bg-black py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-light">Copyright &copy;Dibidibidip 2023</div></div>
+                    <div class="col-auto">
+                        <a class="small" href="#!">Privacy</a>
+                        <span class="mx-1">&middot;</span>
+                        <a class="small" href="#!">Terms</a>
+                        <span class="mx-1">&middot;</span>
+                        <a class="small" href="#!">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script th:src="@{/js/scripts.js}"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    </body>
+</html>
