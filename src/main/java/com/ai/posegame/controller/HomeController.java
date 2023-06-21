@@ -10,7 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/home")
-    public void hello(Model model){
+    public void hello(){
         log.info("hello..............");
+    }
+
+    @GetMapping("/contact")
+    public void contact(){
+        log.info("contact..............");
     }
 }

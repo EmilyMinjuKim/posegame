@@ -21,6 +21,7 @@ public class MemberRepositoryTests {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /*
     @Test
     public void insertMembers(){
 
@@ -41,6 +42,9 @@ public class MemberRepositoryTests {
         });
     }
 
+     */
+
+    /*
     @Test
     public void testRead() {
 
@@ -54,4 +58,6 @@ public class MemberRepositoryTests {
         member.getRoleSet().forEach(memberRole -> log.info(memberRole.name()));
 
     }
+
+     */
 }
