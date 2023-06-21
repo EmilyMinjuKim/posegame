@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -28,7 +29,7 @@
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                             <li class="nav-item"><a class="nav-link" href="home">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="game/main">Create</a></li>
-                            <!--li th:if="${#authentication.principal.username !=null}" class="nav-item"><a class="nav-link" href="game/enter">Enter</a></li-->
+                            <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" href="game/enter">Enter</a></li>
                         </ul>
                     </div>
                 </div>
@@ -196,6 +197,7 @@
         <script th:inline="javascript">
             const auth = [[${#authentication}]]
             const errors = [[${errors}]]
+            console.log(auth)
             console.log(errors)
         </script>
     </body>
