@@ -45,5 +45,9 @@ public class CustomSocialLoginSuccessHandler implements AuthenticationSuccessHan
 
             //response.sendRedirect("/board/list");
         }
+
+        if(!memberSecurityDTO.isSocial()){
+            response.sendRedirect("/home");
+        }
     }
 }

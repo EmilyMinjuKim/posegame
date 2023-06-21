@@ -21,7 +21,6 @@ public class MemberRepositoryTests {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /*
     @Test
     public void insertMembers(){
 
@@ -41,8 +40,6 @@ public class MemberRepositoryTests {
 
         });
     }
-
-     */
 
     /*
     @Test

@@ -45,7 +45,7 @@ public class CustomSecurityConfig {
         log.info("-------------config---------------");
 
         //커스텀 로그인 페이지 : 여기서 로그인을 진행한다 (따로 로그인에 필요한 post코드 작성할 필요 X)
-        http.formLogin().loginPage("/member/login");
+        http.formLogin().loginPage("/member/login").successHandler(authenticationSuccessHandler());
 
         //CSRF 토큰 비활성화
         http.csrf().disable();
@@ -61,9 +61,12 @@ public class CustomSecurityConfig {
          */
 
         // 소셜 로그인
+        /*
         http.oauth2Login()
                 .loginPage("/member/login")
                 .successHandler(authenticationSuccessHandler());
+        */
+
 
         return http.build();
     }
