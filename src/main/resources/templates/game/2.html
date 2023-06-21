@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dibidibidip:::동작따라하기</title>
+        <title>Dibidibidip:::표정따라하기</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
         <!-- Custom Google font-->
@@ -20,8 +20,8 @@
             .card{
                 --bs-card-bg: var(--bs-indigo);
                 #opacity: 60%;
-                width: 300px;
-                height: 200px;
+                width: 250px;
+                height: 140px;
                 color: white;
             }
             .card h5{
@@ -31,7 +31,7 @@
                 left: 10%;
             }
             .card h1{
-                margin-top: 26%;
+                margin-top: 20%;
                 text-align: center;
                 display: inline-block;
                 vertical-align: middle;
@@ -86,17 +86,17 @@
                 <div id="last"></div>
                 <div class="container px-5 mb-3">
                     <div class="text-center mb-5">
-                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">동작 따라하기</span></h1>
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">표정 따라하기</span></h1>
                     </div>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-auto mb-2">
                             <h5 class="text-center" style="color: white">🔮&nbsp;P&nbsp;O&nbsp;S&nbsp;E</h5>
-                            <img id="img" th:src="${imgUrl}" style="width: 400px; height: 480px;">
+                            <img id="img" th:src="${imgUrl}" style="width: 350px; height: 350px;">
                             <input th:type="hidden" id="title" th:value="${title}">
                         </div>
                         <div class="col-auto mb-2">
                             <h5 class="text-center" style="color: white">📷&nbsp;&nbsp;Y&nbsp;O&nbsp;U</h5>
-                            <!--img th:src="${imgUrl}" style="width: 400px; height: 480px;"-->
+                            <!--img th:src="${imgUrl}" style="width: 400px; height: 400px;"-->
                             <!---->
                             <video id="videoInput" style="display:none"></video>
                             <canvas id="videoOutput"></canvas>
@@ -145,7 +145,7 @@
             let score = 0;
 
             <!-- 카메라 크기 -->
-            var w = 400, h = 480;
+            var w = 350, h = 350;
 
             <!-- 웹소켓 연결 -->
             var url = "ws://localhost:1111"

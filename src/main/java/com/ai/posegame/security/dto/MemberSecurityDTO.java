@@ -1,4 +1,3 @@
-/*
 package com.ai.posegame.security.dto;
 
 import lombok.Getter;
@@ -15,6 +14,11 @@ import java.util.Map;
 @Setter
 @ToString
 public class MemberSecurityDTO extends User implements OAuth2User {
+
+    /*
+    User부모 클래스는 UserDetails 인터페이스를 구현한 클래스. -> 간단하게 UserDetails 타입 생성 가능.
+    */
+
     private String mid;
     private String mpw;
     private String email;
@@ -44,4 +48,3 @@ public class MemberSecurityDTO extends User implements OAuth2User {
         return this.mid;
     }
 }
-*/

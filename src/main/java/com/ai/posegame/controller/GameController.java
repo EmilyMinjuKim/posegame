@@ -35,6 +35,14 @@ public class GameController {
         model.addAttribute("title", title);
     }
 
+    @GetMapping("/2")
+    public void game2GET(Model model){
+        log.info("game2 get...");
+        String title = "pose1";
+        model.addAttribute("imgUrl", "/assets/pictures/" + title + ".jpg");
+        model.addAttribute("title", title);
+    }
+
     @PostMapping("/ajax")
     @ResponseBody
     public Map<String, String> ajaxPOST(){

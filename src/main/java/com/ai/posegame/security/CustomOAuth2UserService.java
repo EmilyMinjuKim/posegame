@@ -1,4 +1,3 @@
-/*
 package com.ai.posegame.security;
 
 import com.ai.posegame.domain.Member;
@@ -21,6 +20,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+/*
+로그인 후 전달하는 정보가 UserDetails 타입이 아니기 때문에
+UserDetailsService 인터페이스를 구현하듯 OAuth2UserService 인터페이스 구현
+*/
 
 @Log4j2
 @Service
@@ -119,4 +123,3 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
 }
-*/
