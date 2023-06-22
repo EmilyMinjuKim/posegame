@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dibidibidip:::동작따라하기</title>
+    <!-- Favicon-->
+    <!-- Custom Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <style>
+        .card{
+            --bs-card-bg: var(--bs-indigo);
+            #opacity: 60%;
+            width: 300px;
+            height: 200px;
+            color: white;
+        }
+        .card h5{
+            margin: 0;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+        }
+        .card h1{
+            margin-top: 26%;
+            text-align: center;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        #sound{
+            margin: 0;
+            position: absolute;
+            right: 9%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        #last{
+            width: 100%;
+            height: 30%;
+            color: var(--bs-yellow);
+            font-size: 5.5em;
+            font-weight: bold;
+            text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+            text-align: center;
+            position: absolute;
+            top: 40%;
+            z-index: 1;
+        }
+        #last p{
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #success{
+            font-weight: bold;
+            text-align:center;
+            z-index: 2;
+            position:absolute;
+            color:#16FF00;
+            top: 50%;
+            left:50%;
+            width:100%;
+            transform:translate(-50%,-50%);
+            text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column h-100 bg-black">
+<main class="flex-shrink-0">
+    <!-- Navigation-->
+    <div id="nav-load" th:replace="~{layout/header :: navFragment}"></div>
+    <!-- Projects Section-->
+    <section class="py-5">
+        <div id="last"></div>
+        <div class="container px-5 mb-3">
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bolder mb-1"><span class="text-gradient d-inline">동작 따라하기</span></h1>
+            </div>
+            <div class="row gx-5 justify-content-center">
+                <div class="col-auto mb-2">
+                    <h5 class="text-center" style="color: white">🔮&nbsp;P&nbsp;O&nbsp;S&nbsp;E</h5>
+                    <div style="position: relative">
+                        <img id="img" th:src="${imgUrl}" style="width: 400px; height: 480px;">
+                    </div>
+                    <input th:type="hidden" id="title" th:value="${title}">
+                </div>
+                <div class="col-auto mb-2">
+                    <h5 class="text-center" style="color: white">📷&nbsp;&nbsp;Y&nbsp;O&nbsp;U</h5>
+                    <!--img th:src="${imgUrl}" style="width: 400px; height: 400px;"-->
+                    <!---->
+                    <video id="videoInput" style="display:none"></video>
+                    <canvas id="videoOutput"></canvas>
+
+                </div>
+                <div class="col-auto mb-2">
+                    <h5 class="text-center" style="color: white;">P&nbsp;R&nbsp;O&nbsp;G&nbsp;R&nbsp;E&nbsp;S&nbsp;S</h5>
+                    <div class="card mb-2">
+                        <h5>score</h5>
+                        <h1><span id="score">0</span>점</h1>
+                    </div>
+                    <div class="card mb-3">
+                        <h5>time</h5>
+                        <h1><span id="time"></span></h1>
+                    </div>
+                    <div class="card" style="background: none;">
+                        <img id="sound" src="/assets/btn/sound.png" onclick="playAudio();">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form id="scoreForm" method="GET" action="/game/result">
+            <input type="hidden" name="mid" th:value="${gameInfo.mid}">
+            <input type="hidden" name="gname" th:value="${gameInfo.gname}">
+            <input type="hidden" name="score" id="result">
+        </form>
+    </section>
+</main>
+<!-- Footer-->
+<footer class="bg-black py-4 mt-auto">
+    <div class="container px-5">
+        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+            <div class="col-auto"><div class="small m-0 text-light">Copyright &copy;Dibidibidip 2023</div></div>
+            <div class="col-auto">
+                <a class="small" href="#!">Privacy</a>
+                <span class="mx-1">&middot;</span>
+                <a class="small" href="#!">Terms</a>
+                <span class="mx-1">&middot;</span>
+                <a class="small" href="#!">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script th:src="@{/js/scripts.js}"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
+    <!-- 유저 점수 -->
+    let score = 0;
+
+    <!-- 카메라 크기 -->
+    var w = 400, h = 480;
+
+    <!-- 웹소켓 연결 -->
+    //var url = "ws://localhost:1111"
+    var url = "ws://13.59.44.233:9999"
+    var ws = new WebSocket(url);
+    ws.onopen = function(){
+        console.log("Websocket is connected.");
+        stream();
+    }
+
+    <!-- 이미지 일치 확인 -->
+    ws.onmessage = function(msg){
+
+        // 파이썬에서 보내주는 메세지
+        var classification = msg.data;
+        console.log(classification);
+
+        // 현재 그림의 타이틀
+        /*<![CDATA[*/
+        var now = [[${title}]];
+        var gname = [[${gameInfo.gname}]];
+        /*]]>*/
+
+        // 만약 파이썬 메시지와 그림 타이틀이 같으면 ajax 실행
+        if(classification === now){
+            console.log("equals");
+
+            $.ajax({
+                url: "/game/ajax",
+                type: "POST",
+                data: {"gname" : gname},
+                success: function (data) {
+                    console.log("success");
+
+                    $('#img').after('<h1 id="success">S&nbsp;U&nbsp;C&nbsp;C&nbsp;E&nbsp;S&nbsp;S&nbsp;😆</h1>');
+                    setTimeout(function (){
+                        $("#success").remove();
+                        // 다음 이미지로 바꾸고 title과 score 정보 업데이트
+                        document.getElementById("img").src = data.imgUrl;
+                        document.getElementById("title").value = data.title;
+                    }, 500);
+
+                    score += 10;
+                    $("#score").text(score);
+                },
+                error: function (error) {
+                    console.log("error")
+                    console.error(error);
+                }
+            });
+        }
+
+    }
+
+    /*
+    ws.onclose = function (){
+        setTimeout(ws, 300); // 웹소켓을 재연결하는 코드 삽입
+    }
+     */
+
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    var constraints = {audio: false, video: true};
+    var video = document.getElementById("videoInput");
+
+    video.width = w;
+    video.height = h;
+
+    function successCallback(stream){
+        video.srcObject = stream;
+        video.play();
+    }
+
+    function errorCallback(error){
+        console.log(error);
+    }
+    navigator.getUserMedia(constraints, successCallback, errorCallback);
+
+    var canvas = document.getElementById("videoOutput");
+    canvas.width = w;
+    canvas.height = h;
+    var ctx = canvas.getContext("2d");
+    function processImage(){
+        ctx.drawImage(video, 0, 0, w, h);
+        setTimeout(processImage, 1);
+    }
+    processImage();
+
+    function stream(){
+        setInterval(sendImage, 30);
+    }
+
+    function sendImage(){
+        var rawData = canvas.toDataURL("image/jpeg", 0.5);
+        ws.send(rawData);
+    }
+
+
+</script>
+<script>
+    function playAudio(){
+        console.log("audio");
+        var audio = new Audio('/assets/bgm/fast.mp3');
+        audio.play();
+    }
+
+    var time = 3;
+
+    var x = setInterval(function (){
+        document.getElementById("time").innerHTML = time + "초";
+
+        if(time<=5){
+            document.getElementById("time").innerHTML
+                = "<p style='color: red'>" +
+                time + "초" +
+                "</p>"
+            ;
+        }
+
+        if(time<=0){
+            clearInterval(x);
+            document.getElementById("last").innerHTML
+                = "<p>G A M E  O V E R</p>";
+
+            $("#last").css({
+                "background" : "rgba(0,0,0,0.5)"
+            });
+
+            setTimeout(function (){
+                document.getElementById("result").value = score;
+                $("#scoreForm").submit();
+            }, 2000);
+        }
+
+        time--;
+    }, 1000);
+</script>
+</body>
+</html>

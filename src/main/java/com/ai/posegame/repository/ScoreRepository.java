@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ScoreRepository extends JpaRepository<Score, String> {
 
-    List<Score> findTop5ByMidAndGnameOrderByDateDesc(String mid, String gname);
+    List<Score> findTop5ByMidAndGnameOrderByRegDateDesc(String mid, String gname);
 
     @Query("select sum(s.score) from Score s where s.mid = :mid and s.gname = :gname")
     int sum(String mid, String gname);

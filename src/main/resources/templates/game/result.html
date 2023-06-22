@@ -68,8 +68,8 @@
                                     <tbody>
                                         <th:block th:each="list, listStat : ${list}">
                                         <tr id="today" th:if="${listStat.index == 0}">
-                                            <td><span th:text="${list.date}"></span>&nbsp;&nbsp;<span class="badge">today</span></td>
-                                            <td class="score"><span th:text="${list.score}"></span>점</td>
+                                            <td><span>[[${list.date}]]</span>&nbsp;&nbsp;<span class="badge">today</span></td>
+                                            <td class="score"><span>[[${list.score}]]</span>점</td>
                                         </tr>
                                         <tr th:unless="${listStat.index == 0}">
                                             <td th:text="${list.date}"></td>
@@ -84,7 +84,7 @@
                     <div class="row gx-5 justify-content-center">
                         <div class="text-center text-xxl-start">
                             <div class="d-grid gap-3 d-sm-flex justify-content-center mb-3">
-                                <a class="btn btn-success btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="/game/1">RESTART</a>
+                                <a class="btn btn-success btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" th:href="@{/game/__${gname}__}">RESTART</a>
                                 <a class="btn btn-light btn-lg px-5 py-3 fs-6 fw-bolder" href="/game/main">GAME LIST</a>
                             </div>
                         </div>

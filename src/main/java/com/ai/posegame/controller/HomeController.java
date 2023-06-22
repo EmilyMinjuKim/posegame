@@ -14,8 +14,4 @@ public class HomeController {
         log.info("hello..............");
     }
 
-    @GetMapping("/contact")
-    public void contact(){
-        log.info("contact..............");
-    }
 }

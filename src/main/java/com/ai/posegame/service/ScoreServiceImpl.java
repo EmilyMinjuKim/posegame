@@ -21,7 +21,7 @@ public class ScoreServiceImpl implements ScoreService{
 
     @Override
     public List<ScoreDTO> getHistory(String mid, String gname) {
-        List<Score> list = scoreRepository.findTop5ByMidAndGnameOrderByDateDesc(mid, gname);
+        List<Score> list = scoreRepository.findTop5ByMidAndGnameOrderByRegDateDesc(mid, gname);
         List<ScoreDTO> scoreList = list.stream()
                 .map(score -> modelMapper.map(score, ScoreDTO.class))
                 .collect(Collectors.toList());

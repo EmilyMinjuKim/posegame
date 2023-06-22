@@ -1,7 +1,9 @@
 package com.ai.posegame.controller;
 
 import com.ai.posegame.domain.Score;
+import com.ai.posegame.dto.PictureDTO;
 import com.ai.posegame.dto.ScoreDTO;
+import com.ai.posegame.service.PictureService;
 import com.ai.posegame.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +25,7 @@ import java.util.Map;
 public class GameController {
 
     private final ScoreService scoreService;
+    private final PictureService pictureService;
 
     @GetMapping("/main")
     public void mainGET(){
@@ -30,7 +33,7 @@ public class GameController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/1")
+    @GetMapping("/pose")
     public void game1GET(Model model,
                          Principal principal){
         log.info("game1 get...");
@@ -42,30 +45,39 @@ public class GameController {
         scoreDTO.setGname(gname);
         model.addAttribute("gameInfo", scoreDTO);
 
-        String title = "pose1";
-        model.addAttribute("imgUrl", "/assets/pictures/" + title + ".jpg");
+        String title = pictureService.selectTitle(gname);
+        model.addAttribute("imgUrl", "/assets/pictures/" + gname + "/" + title + ".jpg");
         model.addAttribute("title", title);
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/2")
-    public void game2GET(Model model){
+    @GetMapping("/face")
+    public void game2GET(Model model,
+                         Principal principal){
         log.info("game2 get...");
+        String mid = principal.getName();
+        String gname = "face";
 
-        String title = "pose1";
-        model.addAttribute("imgUrl", "/assets/pictures/" + title + ".jpg");
+        ScoreDTO scoreDTO = new ScoreDTO();
+        scoreDTO.setMid(mid);
+        scoreDTO.setGname(gname);
+        model.addAttribute("gameInfo", scoreDTO);
+
+        String title = pictureService.selectTitle(gname);
+        model.addAttribute("imgUrl", "/assets/pictures/" + gname + "/" + title + ".jpg");
         model.addAttribute("title", title);
-
     }
 
     @PostMapping("/ajax")
     @ResponseBody
-    public Map<String, String> ajaxPOST(){
+    public Map<String, String> ajaxPOST(@RequestParam String gname){
         log.info("ajax.................................................................");
+        log.info("gname............. : " + gname);
 
-        String title = "pose2";
+        String title = pictureService.selectTitle(gname);
+        log.info("title............. : " + title);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("imgUrl", "/assets/pictures/" + title + ".jpg");
+        map.put("imgUrl", "/assets/pictures/" + gname + "/" + title + ".jpg");
         map.put("title", title);
 
         return map;
@@ -91,6 +103,7 @@ public class GameController {
 
         model.addAttribute("list", list);
         model.addAttribute("total", total);
+        model.addAttribute("gname", game);
     }
 
 }
