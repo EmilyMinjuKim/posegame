@@ -159,6 +159,7 @@
     var ws = new WebSocket(url);
     ws.onopen = function(){
         console.log("Websocket is connected.");
+
         stream();
     }
 
@@ -206,12 +207,9 @@
 
     }
 
-    /*
-    ws.onclose = function (){
-        setTimeout(ws, 300); // 웹소켓을 재연결하는 코드 삽입
-    }
-     */
 
+    // legacy가 있는 브라우저에서의 사용을 위해
+    /*
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
     var constraints = {audio: false, video: true};
@@ -229,6 +227,30 @@
         console.log(error);
     }
     navigator.getUserMedia(constraints, successCallback, errorCallback);
+     */
+
+    var constraints = { audio: false, video: { width: w, height: h } };
+    var video = document.querySelector('video');
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(stream) {
+
+            // Older browsers may not have srcObject
+            if ("srcObject" in video) {
+                video.srcObject = stream;
+            } else {
+                // Avoid using this in new browsers, as it is going away.
+                video.src = window.URL.createObjectURL(stream);
+            }
+            video.onloadedmetadata = function(e) {
+                video.play();
+            };
+        })
+        .catch(function(err) {
+            console.log(err.name + ": " + err.message);
+        });
+
+
 
     var canvas = document.getElementById("videoOutput");
     canvas.width = w;
@@ -250,14 +272,15 @@
     }
 
 
-</script>
-<script>
+    // BGM
     function playAudio(){
         console.log("audio");
         var audio = new Audio('/assets/bgm/fast.mp3');
         audio.play();
     }
 
+
+    // game timeout 설정
     var time = 3;
 
     var x = setInterval(function (){
@@ -280,10 +303,15 @@
                 "background" : "rgba(0,0,0,0.5)"
             });
 
+            // 게임 끝나면 웹소켓 닫아주기
+            ws.close();
+
+            // 게임 결과 전송
             setTimeout(function (){
                 document.getElementById("result").value = score;
                 $("#scoreForm").submit();
             }, 2000);
+
         }
 
         time--;

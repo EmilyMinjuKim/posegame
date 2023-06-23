@@ -241,16 +241,15 @@
                 ws.send(rawData);
             }
 
-            //stream();
 
-        </script>
-        <script>
+            // BGM
             function playAudio(){
                 console.log("audio");
                 var audio = new Audio('/assets/bgm/fast.mp3');
                 audio.play();
             }
 
+            // 게임 timeout 설정
             var time = 3;
 
             var x = setInterval(function (){
@@ -273,6 +272,10 @@
                         "background" : "rgba(0,0,0,0.5)"
                     });
 
+                    // 게임 끝나면 웹소켓 닫아주기
+                    ws.close();
+
+                    // 게임 결과 전송
                     setTimeout(function (){
                         document.getElementById("result").value = score;
                         $("#scoreForm").submit();
