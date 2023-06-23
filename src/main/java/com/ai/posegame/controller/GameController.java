@@ -32,6 +32,11 @@ public class GameController {
         log.info("game main get...");
     }
 
+    @GetMapping("/test")
+    public void testGET(){
+        log.info("test get...");
+    }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/pose")
     public void game1GET(Model model,
@@ -46,6 +51,7 @@ public class GameController {
         model.addAttribute("gameInfo", scoreDTO);
 
         String title = pictureService.selectTitle(gname);
+        log.info(title);
         model.addAttribute("imgUrl", "/assets/pictures/" + gname + "/" + title + ".jpg");
         model.addAttribute("title", title);
     }
