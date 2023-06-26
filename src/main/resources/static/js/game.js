@@ -8,6 +8,8 @@ var ws = new WebSocket(url);
 
 ws.onopen = function(){
     console.log("Websocket is connected.");
+    console.log(gname);
+    ws.send(gname);
     stream();
 }
 
@@ -44,6 +46,7 @@ ws.onmessage = function(msg){
                         "opacity" : "1"
                     });
                     document.getElementById("title").value = data.title;
+                    now = data.title;
                 },
                 error: function (error) {
                     console.log("error")
@@ -128,7 +131,7 @@ function playAudio(){
 
 
 // game timeout 설정
-var time = 50;
+var time = 30;
 
 var x = setInterval(function (){
     document.getElementById("time").innerHTML = time + "초";
