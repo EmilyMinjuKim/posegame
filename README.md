@@ -1,8 +1,14 @@
 ![header](https://capsule-render.vercel.app/api?type=Waving&color=auto&height=300&section=header&text=POSE%20GAME&fontSize=90)
 
-## 메인 화면
+## 🎞 Preview
+#### 1. 메인 화면
+![home](https://github.com/EmilyMinjuKim/posegame/assets/65878320/1ef1f350-9424-4ec3-93a6-26594cc4ddec)
+#### 2. 로그인 & 회원가입
+![login join](https://github.com/EmilyMinjuKim/posegame/assets/65878320/fd6c2150-401d-46eb-bf7d-db585b8867a2)
+#### 3. 게임 & 결과
+![game](https://github.com/EmilyMinjuKim/posegame/assets/65878320/6069d466-cbb8-466c-bb54-601f3deea038)
 
-
+#
 <div align="center">
   <h4>🗂 Tech Stack 🗂</h4>
   <h6>🏳️‍🌈 Languages & Frameworks 🏳️‍🌈</h6>
