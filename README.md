@@ -42,14 +42,18 @@
 </br>
 
 ## 3. ERD
-![erd](https://github.com/EmilyMinjuKim/posegame/assets/65878320/37778ad6-ce65-4464-b608-1d9d8f4c3fd4)
+<img src="https://github.com/EmilyMinjuKim/posegame/assets/65878320/37778ad6-ce65-4464-b608-1d9d8f4c3fd4" width="500" height="400"></img>
 
 </br>
 
 ## 4. 핵심 기능
-이 서비스의 핵심 기능은 Java와 Python이 Web Socket으로 통신하면서 동영상을 전송하고,  
-해당 동영상에 대한 classification 결과를 전달받는 것입니다.
+- 이 서비스의 핵심 기능은 Java와 Python이 Web Socket으로 통신하면서 동영상을 전송하고,  
+해당 동영상에 대한 classification 결과를 전달받는 것입니다.  
+- 그리고 그 결과에 따라 점수를 업데이트하고 다시 서버로부터 새로운 이미지 정보를 불러옵니다.  
 
 <details>
 <summary><b>핵심 기능 설명 펼치기</b></summary>
+<div markdown="1">
+### 4.1 전체 흐름
+</div>
 </details>
