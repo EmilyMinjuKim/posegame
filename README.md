@@ -51,9 +51,3 @@
 해당 동영상에 대한 classification 결과를 전달받는 것입니다.  
 - 그리고 그 결과에 따라 점수를 업데이트하고 다시 서버로부터 새로운 이미지 정보를 불러옵니다.  
 
-<details>
-<summary><b>핵심 기능 설명 펼치기</b></summary>
-<div markdown="1">
-## 4.1 전체 흐름
-</div>
-</details>
